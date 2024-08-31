@@ -1,15 +1,124 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
-</head>
 
-<body>
-    <h1>Home Page</h1>
-</body>
+<%- include('./partials/head') %>
+<!-- Page content -->
+<div class="w3-content" style="max-width:1532px;">
 
-</html>
+  <div class="w3-container w3-margin-top" id="rooms">
+    <h3>Apartamentos</h3>
+    <p>Siéntete como en casa es nuestro lema. Ofrecemos las mejores camas de la industria. Duerme bien y descansa bien.</p>
+  </div>
+  <div class="w3-row-padding">
+    <div class="w3-col m3">
+      <label><i class="fa fa-calendar-o"></i> Ingreso</label>
+      <input class="w3-input w3-border" type="date" placeholder="DD MM YYYY">
+    </div>
+    <div class="w3-col m3">
+      <label><i class="fa fa-calendar-o"></i> Salida</label>
+      <input class="w3-input w3-border" type="date" placeholder="DD MM YYYY">
+    </div>
+    <div class="w3-col m2">
+      <label><i class="fa fa-male"></i> Nº Personas</label>
+      <input class="w3-input w3-border" type="number" placeholder="1">
+    </div>
+    <div class="w3-col m2">
+      <label><i class="fa fa-home "></i> Nº Habitaciones</label>
+      <input class="w3-input w3-border" type="number" placeholder="0">
+    </div>
+    <div class="w3-col m2">
+      <label><i class="fa fa-search"></i> Buscar</label>
+      <button class="w3-button w3-block w3-black">Buscar</button>
+    </div>
+  </div>
+
+  <div class="w3-row-padding w3-padding-16">
+      <!--aqui el for-->
+      <% for (const ap of apartments) { %>
+      <div class="w3-third w3-margin-bottom">
+        <img src="<%= ap.mainPhoto %>" alt="Norway" style="width:100%; height: 350px;  ">
+        <div class="w3-container w3-white">
+          <h3><%= ap.title %></h3>
+          <h6 class="w3-opacity">Desde <%= ap.price %> € por noche</h6>          
+          <p>m<sup>2</sup>  <%= ap.size %></p>
+          <p class="w3-large"> 
+            <% if (ap.services.wifi === true) { %>
+              <span class="material-symbols-outlined">
+                wifi
+                </span>
+            <% } %>
+            <% if (ap.services.tv === true) { %>
+              <span class="material-symbols-outlined">
+                tv
+                </span>
+            <% } %>
+            <% if (ap.services.airConditioner === true) { %>
+              <span class="material-symbols-outlined">
+                mode_fan
+                </span>
+            <% } %>
+            <% if (ap.services.kitchen === true) { %>
+              <span class="material-symbols-outlined">
+                kitchen
+                </span>
+            <% } %>
+            <% if (ap.services.disability === true) { %>
+              <span class="material-symbols-outlined">
+                blind
+                </span>
+            <% } %>
+            <% if (ap.services.heater === true) { %>
+              <span class="material-symbols-outlined">
+                heat
+                </span>
+            <% } %>
+          </p>
+          <a class="w3-button w3-block w3-black w3-margin-bottom" href="/apartment/<%= ap._id %>">Ver Detalle</a>
+        </div>
+      </div>
+      <% } %>
+      <!--hasta aqui-->
+  
+  </div>
+
+  <div class="w3-row-padding" id="about">
+    <div class="w3-col l4 12">
+      <h3>Sobre Barcelona</h3>
+      <h6 >Barcelona es una de las ciudades más vibrantes y atractivas de Europa, ideal para turistas que buscan una mezcla de cultura, historia, arquitectura y entretenimiento. Aquí tienes un resumen de lo que no te puedes perder:
+        
+        Sagrada Familia: Este icónico templo diseñado por Antoni Gaudí es una visita obligada. Aunque aún está en construcción, su majestuosidad y detalle impresionan a todos.
+        Parque Güell: Un colorido parque diseñado también por Gaudí, con vistas panorámicas de la ciudad.
+        Casa Batlló y Casa Milà (La Pedrera): Dos de las obras más famosas de Gaudí, situadas en el elegante Paseo de Gracia.
+        Historia y Cultura:
+        
+        
+        
+        <p>Aceptamos: <i class="fa fa-credit-card w3-large"></i> <i class="fa fa-cc-mastercard w3-large"></i> <i class="fa fa-cc-amex w3-large"></i> <i class="fa fa-cc-cc-visa w3-large"></i><i class="fa fa-cc-paypal w3-large"></i></p>
+    </div>
+    <div class="w3-col l8 12">
+      <!-- Image of location/map -->
+      <img src="https://e00-elmundo.uecdn.es/assets/multimedia/imagenes/2023/02/16/16765451516678.jpg" class="w3-image w3-greyscale" style="width:100%;">
+    </div>
+  </div>
+  
+
+  
+  
+
+
+  <div class="w3-container" id="contact">
+    <h2>Contacto</h2>
+    <p>Si tiene alguna pregunta de nuestros servicios escribanos.</p>
+    <i class="fa fa-map-marker w3-text-red" style="width:30px"></i> Barcelona, Spain<br>
+    <i class="fa fa-phone w3-text-red" style="width:30px"></i> Phone: +34 1365478<br>
+    <i class="fa fa-envelope w3-text-red" style="width:30px"> </i> Email: tribookservice@mail.com<br>
+    <form action="/action_page.php" target="_blank">
+      <p><input class="w3-input w3-padding-16 w3-border" type="text" placeholder="Nombre" required name="Name"></p>
+      <p><input class="w3-input w3-padding-16 w3-border" type="text" placeholder="Email" required name="Email"></p>
+      <p><input class="w3-input w3-padding-16 w3-border" type="text" placeholder="Mensaje" required name="Message"></p>
+      <p><button class="w3-button w3-black w3-padding-large" type="submit">Enviar Mensaje</button></p>
+    </form>
+  </div>
+
+<!-- End page content -->
+</div>
+

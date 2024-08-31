@@ -1,0 +1,177 @@
+
+<!-- <!DOCTYPE html>
+<html>
+<head>
+<title>W3.CSS Template</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
+.mySlides {display: none}
+</style>
+</head>
+<body class="w3-content w3-border-left w3-border-right"> -->
+<%- include('./partials/head') %>
+  <div class="w3-content w3-border-left w3-border-right"> 
+  <!-- Sidebar/menu -->
+    <nav class="w3-sidebar w3-light-grey w3-collapse " style="z-index:3;width:260px" id="mySidebar">
+  <div class="w3-container w3-display-container w3-padding-16">
+    <i onclick="w3_close()" class="fa fa-remove w3-hide-large w3-button w3-transparent w3-display-topright"></i>
+    <h3>Alquiler</h3>
+    <h4 style="color: rgb(190, 182, 182); text-decoration:line-through; font-style: italic;"> antes <%= selectedApartment.price %> €</h4>
+    <h3>ahora <%= selectedApartment.price* 0.9 %> €</h3>
+    <h6>por noche</h6>
+    <hr>
+    <form action="" target="_blank">
+      
+      <p><label><i class="fa fa-calendar-check-o"></i> Check In</label></p>
+      <input class="w3-input w3-border" type="text" placeholder="DD MM YYYY" name="CheckIn" required>          
+      <p><label><i class="fa fa-calendar-o"></i> Check Out</label></p>
+      <input class="w3-input w3-border" type="text" placeholder="DD MM YYYY" name="CheckOut" required>         
+      <p><label><i class="fa fa-male"></i> Adults</label></p>
+      <input class="w3-input w3-border" type="number" value="1" name="Adults" min="1" max="6">              
+      <p><label><i class="fa fa-child"></i> Kids</label></p>
+      <input class="w3-input w3-border" type="number" value="0" name="Kids" min="0" max="6">
+      <p><button class="w3-button w3-block w3-green w3-left-align" type="submit"><i class="fa fa-search w3-margin-right"></i> Search availability</button></p>
+    </form>
+  </div>
+
+    </nav>
+
+  <!-- !PAGE CONTENT! -->
+      <div class="w3-main w3-white" style="margin-left:260px">
+  <!-- Push down content on small screens -->
+        <div class="w3-hide-large" style="margin-top:80px"></div>
+  <!-- Slideshow Header -->
+        <div class="w3-container" id="apartment">
+          <h2 class="w3-text-green"><%= selectedApartment.title %></h2>
+          <div class="w3-display-container mySlides">
+            <img src="<%= selectedApartment.mainPhoto %>" style="width:100%;margin-bottom:-6px">
+            <div class="d-flex align-items-center justify-content-center bg-dark text-white p-1" style="height:50px;">
+              <p class="p-0 m-0"><%= selectedApartment.descriptionmainPhoto %></p>
+            </div>
+          </div>
+          <div class="w3-display-container mySlides">
+            <img src="<%= selectedApartment.photo1 %>" style="width:100%;margin-bottom:-6px">
+            <div class="d-flex align-items-center justify-content-center bg-dark text-white p-1" style="height:50px;">
+              <p class="p-0 m-0"><%= selectedApartment.descriptionphoto1 %></p>
+            </div>
+          </div>
+          <div class="w3-display-container mySlides">
+            <img src="<%= selectedApartment.photo2 %>" style="width:100%;margin-bottom:-6px">
+            <div class="d-flex align-items-center justify-content-center bg-dark text-white p-1" style="height:50px;">
+              <p class="p-0 m-0"><%= selectedApartment.descriptionphoto2 %></p>
+            </div>
+          </div>
+          <div class="w3-display-container mySlides">
+            <img src="<%= selectedApartment.photo3 %>" style="width:100%;margin-bottom:-6px">
+            <div class="d-flex align-items-center justify-content-center bg-dark text-white p-1" style="height:50px;">
+              <p class="p-0 m-0"><%= selectedApartment.descriptionphoto3 %></p>
+            </div>
+          </div>
+        </div>
+        <div class="w3-row-padding w3-section">
+          <div class="w3-col s3">
+            <img class="demo w3-opacity w3-hover-opacity-off" src="<%= selectedApartment.mainPhoto %>" style="height: 130px; width:100%;cursor:pointer" onclick="currentDiv(1)" title="Living room">
+          </div>
+          <div class="w3-col s3">
+            <img class="demo w3-opacity w3-hover-opacity-off" src="<%= selectedApartment.photo1 %>" style="height: 130px; width:100%;cursor:pointer" onclick="currentDiv(2)" title="Dining room">
+          </div>
+          <div class="w3-col s3">
+            <img class="demo w3-opacity w3-hover-opacity-off" src="<%= selectedApartment.photo2 %>" style="height: 130px; width:100%;cursor:pointer" onclick="currentDiv(3)" title="Bedroom">
+          </div>
+          <div class="w3-col s3">
+            <img class="demo w3-opacity w3-hover-opacity-off" src="<%= selectedApartment.photo3 %>" style="height: 130px; width:100%;cursor:pointer" onclick="currentDiv(4)" title="Second Living Room">
+          </div>
+        </div>
+
+      <div class="w3-container">
+        <h4><strong>Descripcion del Apartamento</strong></h4>
+        <div class="w3-row w3-large">
+          <%= selectedApartment.description %>
+        </div>
+        <br>
+        <h4><strong>Reglas del Apartamento</strong></h4>
+        <div class="w3-row w3-large">
+          <%= selectedApartment.normas %>
+        </div>
+        <br>
+        <h4><strong>Espacio</strong></h4>
+        <div class="w3-row w3-large">
+          <div class="w3-col s6">
+            <p><i class="fa fa-fw fa-male"></i> Max. Persona: 4</p>
+            <p><i class="fa fa-fw fa-bath"></i> Habitaciones: 2</p>
+            <p><i class="fa fa-fw fa-bed"></i> Camas dobles: 1</p>
+            
+          </div>
+          <div class="w3-col s6">
+            <p><i class="fa fa-fw fa-bed"></i> Camas simples: 1</p>
+            <p><i class="fa fa-fw fa-bed"></i> Baños: 1</p>
+            <p><i class="fa fa-fw fa-bed"></i> Tamaño m<sup>2</sup>: 1</p>
+          
+          </div>
+        </div>    
+        <br>
+        <h4><strong>Comodidades</strong></h4>
+        <div class="w3-row w3-large">
+          <div class="w3-col s6">
+            <p><i class="fa fa-fw fa-shower"></i> Shower</p>
+            <p><i class="fa fa-fw fa-wifi"></i> WiFi</p>
+            <p><i class="fa fa-fw fa-tv"></i> TV</p>
+          </div>
+          <div class="w3-col s6">
+            <p><i class="fa fa-fw fa-cutlery"></i> Kitchen</p>
+            <p><i class="fa fa-fw fa-thermometer"></i> Heating</p>
+            <p><i class="fa fa-fw fa-wheelchair"></i> Accessible</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+ <script>
+// Script to open and close sidebar when on tablets and phones
+function w3_open() {
+  document.getElementById("mySidebar").style.display = "block";
+  document.getElementById("myOverlay").style.display = "block";
+}
+ 
+function w3_close() {
+  document.getElementById("mySidebar").style.display = "none";
+  document.getElementById("myOverlay").style.display = "none";
+}
+
+// Slideshow Apartment Images
+var slideIndex = 1;
+showDivs(slideIndex);
+
+function plusDivs(n) {
+  showDivs(slideIndex += n);
+}
+
+function currentDiv(n) {
+  showDivs(slideIndex = n);
+}
+
+function showDivs(n) {
+  var i;
+  var x = document.getElementsByClassName("mySlides");
+  var dots = document.getElementsByClassName("demo");
+  if (n > x.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = x.length}
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";
+  }
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" w3-opacity-off", "");
+  }
+  x[slideIndex-1].style.display = "block";
+  dots[slideIndex-1].className += " w3-opacity-off";
+}
+</script>
+</body>
+</html>
