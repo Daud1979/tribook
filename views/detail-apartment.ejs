@@ -24,19 +24,18 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
     <h4 style="color: rgb(190, 182, 182); text-decoration:line-through; font-style: italic;"> antes <%= selectedApartment.price %> €</h4>
     <h3>ahora <%= selectedApartment.price* 0.9 %> €</h3>
     <h6>por noche</h6>
-    <hr>
-    <form action="" target="_blank">
-      
-      <p><label><i class="fa fa-calendar-check-o"></i> Check In</label></p>
-      <input class="w3-input w3-border" type="text" placeholder="DD MM YYYY" name="CheckIn" required>          
-      <p><label><i class="fa fa-calendar-o"></i> Check Out</label></p>
-      <input class="w3-input w3-border" type="text" placeholder="DD MM YYYY" name="CheckOut" required>         
-      <p><label><i class="fa fa-male"></i> Adults</label></p>
-      <input class="w3-input w3-border" type="number" value="1" name="Adults" min="1" max="6">              
-      <p><label><i class="fa fa-child"></i> Kids</label></p>
-      <input class="w3-input w3-border" type="number" value="0" name="Kids" min="0" max="6">
-      <p><button class="w3-button w3-block w3-green w3-left-align" type="submit"><i class="fa fa-search w3-margin-right"></i> Search availability</button></p>
-    </form>
+    <% if (isAdmin) { %>
+      <a class="w3-button  w3-black w3-margin-bottom" href="/apartment/<%= selectedApartment._id %>/edit">Editar Apartamento</a>
+      <input type="hidden" value="<%=selectedApartment.estado%>" name="estado" id="estado">
+      <% if (selectedApartment.estado==1) { %>
+        <a class="w3-button  w3-red w3-margin-bottom" href="/apartment/<%= selectedApartment._id %>/estado">Deshabilitar </a>
+      <% } else { %>
+        <a class="w3-button  w3-red w3-margin-bottom" href="/apartment/<%= selectedApartment._id %>estado">Habilitar </a>
+      <% } %>
+    <% } else { %>
+        <a class="w3-button  w3-black w3-margin-bottom" href="/apartment/<%= selectedApartment._id %>">Reservar Apartamento</a>
+    <% } %>
+
   </div>
 
     </nav>
@@ -102,15 +101,15 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
         <h4><strong>Espacio</strong></h4>
         <div class="w3-row w3-large">
           <div class="w3-col s6">
-            <p><i class="fa fa-fw fa-male"></i> Max. Persona: 4</p>
-            <p><i class="fa fa-fw fa-bath"></i> Habitaciones: 2</p>
-            <p><i class="fa fa-fw fa-bed"></i> Camas dobles: 1</p>
+            <p><i class="fa fa-fw fa-male"></i> Max. Persona:  <%= selectedApartment.nPerson %></p>
+            <p><i class="fa fa-fw fa-bath"></i> Habitaciones:  <%= selectedApartment.nHab %></p>
+            <p><i class="fa fa-fw fa-bed"></i> Camas dobles:  <%= selectedApartment.nBedDouble %></p>
             
           </div>
           <div class="w3-col s6">
-            <p><i class="fa fa-fw fa-bed"></i> Camas simples: 1</p>
-            <p><i class="fa fa-fw fa-bed"></i> Baños: 1</p>
-            <p><i class="fa fa-fw fa-bed"></i> Tamaño m<sup>2</sup>: 1</p>
+            <p><i class="fa fa-fw fa-bed"></i> Camas simples:  <%= selectedApartment.nBedSimple %></p>
+            <p><i class="fa fa-fw fa-bed"></i> Baños:  <%= selectedApartment.nBat %></p>
+            <p><i class="fa fa-fw fa-bed"></i> Tamaño m<sup>2</sup>:  <%= selectedApartment.size %></p>
           
           </div>
         </div>    
@@ -118,14 +117,73 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
         <h4><strong>Comodidades</strong></h4>
         <div class="w3-row w3-large">
           <div class="w3-col s6">
-            <p><i class="fa fa-fw fa-shower"></i> Shower</p>
-            <p><i class="fa fa-fw fa-wifi"></i> WiFi</p>
-            <p><i class="fa fa-fw fa-tv"></i> TV</p>
+            <p>
+            <% if (selectedApartment.services.wifi === true) { %>
+              <span class="material-symbols-outlined">
+                wifi
+                </span>
+                WI-FI
+            <% } %>
+            </p>
+            <p>
+            <% if (selectedApartment.services.tv === true) { %>
+              <span class="material-symbols-outlined">
+                tv
+                </span>
+                Tv Cable
+            <% } %>
+            </p>
+            <p>
+            <% if (selectedApartment.services.airConditioner === true) { %>
+              <span class="material-symbols-outlined">
+                mode_fan
+                </span>
+                Aire Acondicionado
+            <% } %>
+            </p>
+            <p>
+            <% if (selectedApartment.services.kitchen === true) { %>
+              <span class="material-symbols-outlined">
+                kitchen
+                </span>
+                Cocina moderna
+            <% } %>
+            </p>
+         
           </div>
           <div class="w3-col s6">
-            <p><i class="fa fa-fw fa-cutlery"></i> Kitchen</p>
-            <p><i class="fa fa-fw fa-thermometer"></i> Heating</p>
-            <p><i class="fa fa-fw fa-wheelchair"></i> Accessible</p>
+            <p>
+            <% if (selectedApartment.services.disability === true) { %>
+              <span class="material-symbols-outlined">
+                blind
+                </span>
+                Servicios para Discapacitado
+            <% } %>
+            </p>
+            <p>
+            <% if (selectedApartment.services.heater === true) { %>
+              <span class="material-symbols-outlined">
+                heat
+                </span>
+                Calefaccion
+            <% } %>
+            </p>
+            <p>
+            <% if (selectedApartment.services.parking === true) { %>
+              <span class="material-symbols-outlined">
+                local_parking
+                </span>
+                Estacionamiento para movilidad
+            <% } %>
+            </p>
+            <p>
+            <% if (selectedApartment.services.pet === true) { %>
+              <span class="material-symbols-outlined">
+                pets
+                </span>
+                Mascotas
+            <% } %>
+          </p>
           </div>
         </div>
       </div>

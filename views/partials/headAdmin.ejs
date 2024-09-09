@@ -4,7 +4,6 @@
 <title>TRIBOOK</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
@@ -19,7 +18,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
 </style>
 </head>
 <body >
- 
+    
 <!-- Navigation Bar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark pe-5">
     <div class="container-fluid">
@@ -29,50 +28,49 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
       </button>
       <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
         <ul class="navbar-nav">
-          <li class="nav-item <%= isAdmin ? 'novisible' : 'visible' %>">
+          <li class="nav-item">
             <a class="nav-link active" href="/">Inicio</a>
-          </li>  
-          <li class="nav-item <%= isAdmin ? 'visible' : 'novisible' %>">
-            <a class="nav-link active" href="/admin/">Inicio</a>
           </li>       
-          <li class="nav-item <%= isAdmin ? 'novisible' : 'visible' %>" id="navAdmin" >
-            <a class="nav-link" id="modal"  data-bs-toggle="modal" data-bs-target="#exampleModal">Admin</a>
+          <li class="nav-item">
+            <a class="nav-link"  data-bs-toggle="modal" data-bs-target="#exampleModal">Admin</a>
           </li>   
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Admin
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="adminDropdown">
+                <li><a class="dropdown-item" href="/admin/apartment/new-apartment">Registrar Apartamento</a></li>
+                
+            </ul>
+        </li>
           <li class="nav-item">
-            <a class="nav-link active <%= isAdmin ? 'visible' : 'novisible' %>" href="/admin/apartment/new-apartment" id="registerApart">Registrar Apartamento</a>
-          </li>  
-          <li class="nav-item">
-            <a class="nav-link active <%= isAdmin ? 'visible' : 'novisible' %>" id="logout" href="/logout">Cerrar Sesion</a>
-          </li>  
-          
+            <a class="nav-link" href="#contact">Contact</a>
+          </li>
         </ul>
       </div>
     </div>
-  </nav> 
+  </nav>
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Launch demo modal
+  </button>
   
   <!-- Modal -->
   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
-        <form method="POST" action="/login">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">ADMINISTRADOR</h5>
-          </div>
-          <div class="modal-body">
-            <div class="mb-3 col-md-6">
-              <label for="title" class="form-label">Usuario</label>
-              <input type="text" name="username" placeholder="" class="inputadmin" value="admin" required />
-            </div>
-            <div class="mb-3 col-md-6">
-                  <label for="title" class="form-label">Contraseña</label>
-              <input type="password" name="password" placeholder="" class="inputadmin" value="admin" required />
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-secondary" id="btnadmin">Iniciar Sesion</button>
-            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>        
-          </div>
-        </form>
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">DATOS ADMINISTRADOR</h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
       </div>
     </div>
   </div>

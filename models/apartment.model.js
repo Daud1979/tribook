@@ -2,7 +2,7 @@
 const { Schema, model } = require('mongoose');
 
 const apartmentSchema = new Schema({
-  
+
     title: {
         type: String,
         required: true
@@ -78,6 +78,9 @@ const apartmentSchema = new Schema({
         city:String,
         gps:String
     },
+    estado:{
+        type:Number
+    },
     services: {
         
         wifi: Boolean,
@@ -85,7 +88,10 @@ const apartmentSchema = new Schema({
         kitchen: Boolean,
         disability: Boolean,
         heater: Boolean,
-        tv: Boolean
+        tv: Boolean,
+        pet:Boolean,
+        parking:Boolean
+
     }
 
 });

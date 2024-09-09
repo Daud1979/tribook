@@ -4,7 +4,7 @@ const Apartment = require('../models/apartment.model.js');
 const getApartments = async (req, res) => {
 
     // Obtenemos todos los apartamentos de la base de datos
-    const apartments = await Apartment.find();
+    const apartments = await Apartment.find({estado:1});
 
     res.render('home', {
         apartments

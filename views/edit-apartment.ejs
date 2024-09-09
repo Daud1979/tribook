@@ -1,0 +1,134 @@
+<%- include('./partials/head') %>
+
+    <h1 class="text-center mt-2">Editar Apartamento</h1>
+
+    <div class="vh-90">
+        <div class="row">
+        <form class="col-md-6 col-12 mx-auto"   action="/admin/apartment/edit-apartment" method="POST">
+            <div class="mb-3 col-md-6">
+                <label for="province" class="form-label">Provincia</label>
+                <select id="province" name="province" class="form-select" onchange="cargarCiudades()">
+                    <option value="" disabled>Seleccione una provincia</option>
+                    <option value="madrid" <% if (apartment.location.province === 'madrid') { %> selected <% } %>>Madrid</option>
+                    <option value="barcelona" <% if (apartment.location.province === 'barcelona') { %> selected <% } %>>Barcelona</option>
+                    <option value="valencia" <% if (apartment.location.province === 'valencia') { %> selected <% } %>>Valencia</option>
+                    <!-- Agrega más provincias según sea necesario -->
+                </select>
+            </div>
+            <input type="hidden" name="id" id="id" value="<%= apartment._id %>">
+            <div class="mb-3 col-md-6">                
+                <label for="city" class="form-label">Ciudad</label>
+                <select name="gps" id="gps" class="form-select" onchange="mostrarGPS()">
+                   
+                    <!-- Las opciones de ciudades se cargarán dinámicamente -->
+                    <option value="<%= apartment.location.gps %>" selected><%= apartment.location.city %></option>
+                </select>
+                <input  type="hidden" id="city" name="city">
+            </div>
+            <div class="mb-3 col-md-6">
+                <label for="title" class="form-label">Título</label>
+                <input type="text" class="form-control" name="title" id="title" value="<%= apartment.title %>" required maxlength="30">
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Descripcion del Apartamento</label>
+                <textarea class="form-control" id="description" name="description"   rows="2"><%= apartment.description %></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="normas" class="form-label">Reglas del Apartamento</label>
+                <textarea class="form-control" id="normas" name="normas" rows="2" ><%= apartment.normas %></textarea>
+            </div>
+            <div class="d-flex flex-wrap gap-1">
+                <div class="mb-3 col-md-1 col-12">
+                    <label for="nHab" class="form-label">Nº Hab.</label>
+                    <input type="number" class="form-control" name="nHab" id="nHab" value="<%= apartment.nHab %>" required min="0">
+                </div>
+                <div class="mb-3 col-md-1 col-12">
+                    <label for="nBanio" class="form-label">Baños</label>
+                    <input type="number" class="form-control" name="nBanio" id="nBanio" value="<%= apartment.nBat %>" required min="0">
+                </div>
+                <div class="mb-3 col-md-1 col-12">
+                    <label for="size" class="form-label">M<sup>2</sup></label>
+                    <input type="number" class="form-control" name="size" id="size" value="<%= apartment.size %>" required min="0">
+                </div>
+                <div class="mb-3 col-md-1 col-12">
+                    <label for="price" class="form-label">Precio</label>
+                    <input type="number" class="form-control" name="price" id="price" value="<%= apartment.price %>" required min="0">
+                </div>
+                <div class="mb-3 col-md-2 col-12">
+                    <label for="nBed" class="form-label">Cama Simple</label>
+                    <input type="number" class="form-control" name="nBedSimple" id="nBedSimple" value="<%= apartment.nBedSimple %>" required min="0">
+                </div>
+                <div class="mb-3 col-md-2 col-12">
+                    <label for="nBed" class="form-label">Cama Doble</label>
+                    <input type="number" class="form-control" name="nBedDouble" id="nBedDouble" value="<%= apartment.nBedDouble %>" required min="0">
+                </div>
+                <div class="mb-3 col-md-2 col-12">
+                    <label for="nPerson" class="form-label">Nº Personas</label>
+                    <input type="number" class="form-control" name="nPerson" id="nPerson" value="<%= apartment.nPerson %>" required min="0">
+                </div>
+              
+                
+            </div>        
+            <div class="mb-3 border rounded-1 p-1">
+                <label for="mainPhoto" class="form-label">Foto principal</label>
+                <input type="url" class="form-control" name="mainPhoto" id="mainPhoto" value="<%= apartment.mainPhoto %>" required placeholder="Url Imagen">
+                <input type="text" class="form-control fst-italic mt-1" name="descriptionmainPhoto" id="descriptionmainPhoto" value="<%= apartment.descriptionmainPhoto %>"  required placeholder="Describa la foto principal">
+            </div>
+            <div class="mb-3 border rounded-1 p-1">
+                <label for="Photo1" class="form-label">Foto Uno</label>
+                <input type="url" class="form-control" name="Photo1" id="Photo1" value="<%= apartment.photo1 %>" required placeholder="Url Imagen">
+                <input type="text" class="form-control fst-italic mt-1" name="descriptionphoto1" id="descriptionphoto1" value="<%= apartment.descriptionphoto1 %>" required placeholder="Describa la foto principal">
+            </div>
+            <div class="mb-3 border rounded-1 p-1">
+                <label for="Photo2" class="form-label">Foto Dos</label>
+                <input type="url" class="form-control" name="Photo2" id="Photo2" required value="<%= apartment.photo2 %>" placeholder="Url Imagen">
+                <input type="text" class="form-control fst-italic mt-1" name="descriptionphoto2" id="descriptionphoto2" value="<%= apartment.descriptionphoto2 %>" required placeholder="Describa la foto principal">
+            </div>
+            <div class="mb-3 border rounded-1 p-1">
+                <label for="Photo3" class="form-label">Foto Tres</label>
+                <input type="url" class="form-control" name="Photo3" id="Photo3" required value="<%= apartment.photo3 %>" placeholder="Url Imagen">
+                <input type="text" class="form-control fst-italic mt-1" name="descriptionphoto3" id="descriptionphoto3" value="<%= apartment.descriptionphoto3 %>" required placeholder="Describa la foto principal">
+            </div>
+            <div class="d-flex flex-wrap gap-3">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox"  id="wifi"  <% if (apartment.services.wifi) { %> checked <% } %>  name="wifi" >
+                    <label class="form-check-label" for="flexCheckDefault"> WIFI </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox"  id="airConditioner" <% if (apartment.services.airConditioner) { %> checked <% } %>  name="airConditioner">
+                    <label class="form-check-label" for="flexCheckChecked">Aire Aco. </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="disability" <% if (apartment.services.disability) { %> checked <% } %>  name="disability" >
+                    <label class="form-check-label" for="flexCheckChecked">Movilidad Reducida </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox"  id="kitchen" <% if (apartment.services.kitchen) { %> checked <% } %>  name="kitchen" >
+                    <label class="form-check-label" for="flexCheckChecked">Cocina</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox"  id="heater" <% if (apartment.services.heater) { %> checked <% } %>  name="heater" >
+                    <label class="form-check-label" for="flexCheckChecked">Calefaccion</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox"  id="tv" <% if (apartment.services.tv) { %> checked <% } %>  name="tv" >
+                    <label class="form-check-label" for="flexCheckChecked">TV Cable</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox"  id="pet" <% if (apartment.services.pet) { %> checked <% } %>  name="pet" >
+                    <label class="form-check-label" for="flexCheckChecked">Mascotas</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox"  id="parking" <% if (apartment.services.parking) { %> checked <% } %>  name="parking" >
+                    <label class="form-check-label" for="flexCheckChecked">Aparcamiento</label>
+                  </div>
+            </div>
+            <div class="mb-3 text-end">
+                <input type="submit"  class="btn btn-primary" value="Enviar">
+                <input type="button"  class="btn btn-secondary " id="limpiar" value="Cancelar">
+            </div>
+        </form>
+    </div>
+    </div>
+
+<%- include('./partials/foot.ejs') %>

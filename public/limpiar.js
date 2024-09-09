@@ -55,15 +55,15 @@ tv.checked=false;
 })
 
 const data = {
-    madrid: [
+    Madrid: [
         {nombre: 'Madrid', lat: 40.4165, lng: -3.7026},
         {nombre: 'Alcalá de Henares', lat: 40.4819, lng: -3.3635},
     ],
-    barcelona: [
+    Barcelona: [
         {nombre: 'Barcelona', lat: 41.3851, lng: 2.1734},
         {nombre: 'Badalona', lat: 41.4469, lng: 2.2450},
     ],
-    valencia: [
+    Valencia: [
         {nombre: 'Valencia', lat: 39.4699, lng: -0.3763},
         {nombre: 'Gandía', lat: 38.9680, lng: -0.1795},
     ],
@@ -94,5 +94,11 @@ gps.addEventListener('click',()=>{
     const city = document.getElementById('city');
     const textoSeleccionado =gps.options[gps.selectedIndex].textContent;
     city.value =textoSeleccionado ;
+})
+
+btnadmin = document.querySelector('#btnadmin');
+btnadmin.addEventListener('click',()=>{
+    alert('hola');
+
 })
 

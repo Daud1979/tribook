@@ -1,7 +1,9 @@
 
 
+
 <%- include('./partials/head') %>
 <!-- Page content -->
+
 <div class="w3-content" style="max-width:1532px;">
 
   <div class="w3-container w3-margin-top" id="rooms">
@@ -9,75 +11,165 @@
     <p>Siéntete como en casa es nuestro lema. Ofrecemos las mejores camas de la industria. Duerme bien y descansa bien.</p>
   </div>
   <div class="w3-row-padding">
-    <div class="w3-col m3">
-      <label><i class="fa fa-calendar-o"></i> Ingreso</label>
-      <input class="w3-input w3-border" type="date" placeholder="DD MM YYYY">
-    </div>
-    <div class="w3-col m3">
-      <label><i class="fa fa-calendar-o"></i> Salida</label>
-      <input class="w3-input w3-border" type="date" placeholder="DD MM YYYY">
-    </div>
+    <!-- <form class="container" action="/search">
+      <label for="maxPrice">Precio máximo por noche</label>
+      <input type="number" name="maxPrice" id="maxPrice" min="0" max="1000000">
+      <input type="submit" value="Filtrar">
+    </form> -->
+
     <div class="w3-col m2">
-      <label><i class="fa fa-male"></i> Nº Personas</label>
+      <label>Lugar</label>
+      <input class="w3-input w3-border" type="date" placeholder="DD MM YYYY">
+    </div>
+    <div class="w3-col m1">
+      <label>Habitaciones</label>
       <input class="w3-input w3-border" type="number" placeholder="1">
     </div>
-    <div class="w3-col m2">
-      <label><i class="fa fa-home "></i> Nº Habitaciones</label>
+    <div class="w3-col m1">
+      <label>Personas</label>
+      <input class="w3-input w3-border" type="number" placeholder="1">
+    </div>
+    <div class="w3-col m1">
+      <label> Precio €</label>
       <input class="w3-input w3-border" type="number" placeholder="0">
     </div>
-    <div class="w3-col m2">
-      <label><i class="fa fa-search"></i> Buscar</label>
+    <div class="w3-col m1">
+      <label><i class="fa fa-search"></i> </label>
       <button class="w3-button w3-block w3-black">Buscar</button>
     </div>
   </div>
 
-  <div class="w3-row-padding w3-padding-16">
-      <!--aqui el for-->
+  <div class="col-12 col-md-12 col-xs-6 mt-2"> 
+   
+    
+      <% if (isAdmin) { %>
+            <!--aqui el for-->
       <% for (const ap of apartments) { %>
-      <div class="w3-third w3-margin-bottom">
-        <img src="<%= ap.mainPhoto %>" alt="Norway" style="width:100%; height: 350px;  ">
-        <div class="w3-container w3-white">
-          <h3><%= ap.title %></h3>
-          <h6 class="w3-opacity">Desde <%= ap.price %> € por noche</h6>          
-          <p>m<sup>2</sup>  <%= ap.size %></p>
-          <p class="w3-large"> 
-            <% if (ap.services.wifi === true) { %>
-              <span class="material-symbols-outlined">
-                wifi
-                </span>
+        <div class="w3-third w3-margin-bottom">
+          <img src="<%= ap.mainPhoto %>" alt="Norway" style="width:100%; height: 350px;  ">
+          <div class="w3-container w3-white">
+            <h3><%= ap.title %></h3>
+            <h5><%= ap.location.province %></h5>
+            <h6>Ciudad: <%= ap.location.city %></h6>
+            <h6>Coordenadas Gps:<%= ap.location.gps %></h6>
+            <h6 class="w3-opacity">Desde <%= ap.price %> € por noche</h6>          
+            <p>m<sup>2</sup>  <%= ap.size %></p>
+            <p class="w3-large"> 
+              <% if (ap.services.wifi === true) { %>
+                <span class="material-symbols-outlined">
+                  wifi
+                  </span>
+              <% } %>
+              <% if (ap.services.tv === true) { %>
+                <span class="material-symbols-outlined">
+                  tv
+                  </span>
+              <% } %>
+              <% if (ap.services.airConditioner === true) { %>
+                <span class="material-symbols-outlined">
+                  mode_fan
+                  </span>
+              <% } %>
+              <% if (ap.services.kitchen === true) { %>
+                <span class="material-symbols-outlined">
+                  kitchen
+                  </span>
+              <% } %>
+              <% if (ap.services.disability === true) { %>
+                <span class="material-symbols-outlined">
+                  blind
+                  </span>
+              <% } %>
+              <% if (ap.services.heater === true) { %>
+                <span class="material-symbols-outlined">
+                  heat
+                  </span>
+              <% } %>
+              <% if (ap.services.parking === true) { %>
+                <span class="material-symbols-outlined">
+                  local_parking
+                  </span>
+              <% } %>
+              <% if (ap.services.pet === true) { %>
+                <span class="material-symbols-outlined">
+                  pets
+                  </span>
+              <% } %>
+            </p>
+            <a class="w3-button  w3-black w3-margin-bottom" href="/apartment/<%= ap._id %>">Ver Detalle</a>
+            <a class="w3-button  w3-black w3-margin-bottom" href="/apartment/<%= ap._id %>/edit">Editar Apartamento</a>
+            <% if (ap.estado==1) { %>
+              <a class="w3-button  w3-red w3-margin-bottom" href="/apartment/<%= ap._id %>/estado">Deshabilitar </a>
+            <% } else { %>
+              <a class="w3-button  w3-red w3-margin-bottom" href="/apartment/<%= ap._id %>/estado">Habilitar </a>
             <% } %>
-            <% if (ap.services.tv === true) { %>
-              <span class="material-symbols-outlined">
-                tv
-                </span>
-            <% } %>
-            <% if (ap.services.airConditioner === true) { %>
-              <span class="material-symbols-outlined">
-                mode_fan
-                </span>
-            <% } %>
-            <% if (ap.services.kitchen === true) { %>
-              <span class="material-symbols-outlined">
-                kitchen
-                </span>
-            <% } %>
-            <% if (ap.services.disability === true) { %>
-              <span class="material-symbols-outlined">
-                blind
-                </span>
-            <% } %>
-            <% if (ap.services.heater === true) { %>
-              <span class="material-symbols-outlined">
-                heat
-                </span>
-            <% } %>
-          </p>
-          <a class="w3-button w3-block w3-black w3-margin-bottom" href="/apartment/<%= ap._id %>">Ver Detalle</a>
+          </div>
         </div>
-      </div>
-      <% } %>
-      <!--hasta aqui-->
-  
+        <% } %>
+        <!--hasta aqui-->
+        <% } else { %>
+          <!--aqui el for-->
+          <% for (const ap of apartments) { %>
+            <div class="w3-third w3-margin-bottom">
+          <img src="<%= ap.mainPhoto %>" alt="Norway" style="width:100%; height: 350px;  ">
+          <div class="w3-container w3-white">
+            <h3><%= ap.title %></h3>
+            <h5><%= ap.location.province %></h5>
+            <h6>Ciudad: <%= ap.location.city %></h6>
+            <h6>Coordenadas Gps:<%= ap.location.gps %></h6>
+            <h6 class="w3-opacity">Desde <%= ap.price %> € por noche</h6>          
+            <p>m<sup>2</sup>  <%= ap.size %></p>
+            <p class="w3-large"> 
+              <% if (ap.services.wifi === true) { %>
+                <span class="material-symbols-outlined">
+                  wifi
+                  </span>
+              <% } %>
+              <% if (ap.services.tv === true) { %>
+                <span class="material-symbols-outlined">
+                  tv
+                  </span>
+              <% } %>
+              <% if (ap.services.airConditioner === true) { %>
+                <span class="material-symbols-outlined">
+                  mode_fan
+                  </span>
+              <% } %>
+              <% if (ap.services.kitchen === true) { %>
+                <span class="material-symbols-outlined">
+                  kitchen
+                  </span>
+              <% } %>
+              <% if (ap.services.disability === true) { %>
+                <span class="material-symbols-outlined">
+                  blind
+                  </span>
+              <% } %>
+              <% if (ap.services.heater === true) { %>
+                <span class="material-symbols-outlined">
+                  heat
+                  </span>
+              <% } %>
+              <% if (ap.services.parking === true) { %>
+                <span class="material-symbols-outlined">
+                  local_parking
+                  </span>
+              <% } %>
+              <% if (ap.services.pet === true) { %>
+                <span class="material-symbols-outlined">
+                  pets
+                  </span>
+              <% } %>
+            </p>
+           
+            <a class="w3-button  w3-black w3-margin-bottom" href="/apartment/<%= ap._id %>">Ver Detalle</a>
+            <a class="w3-button w3-black w3-margin-bottom" href="<%= ap._id %>">Resevar Apartamento</a>
+     
+          </div>
+            </div>
+          <% } %>
+          <!--hasta aqui-->
+        <% } %>
   </div>
 
   <div class="w3-row-padding" id="about">
@@ -99,7 +191,6 @@
       <img src="https://e00-elmundo.uecdn.es/assets/multimedia/imagenes/2023/02/16/16765451516678.jpg" class="w3-image w3-greyscale" style="width:100%;">
     </div>
   </div>
-  
 
   
   

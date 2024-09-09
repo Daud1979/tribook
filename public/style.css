@@ -4,3 +4,17 @@ body, html {
     display: flex;
     flex-direction: column;
 }
+#modal:hover{
+    cursor: pointer;
+}
+.inputadmin{
+    border-radius: 3px;
+    border: 1px solid black;
+}
+
+.visible{
+    display: block;
+}
+.novisible{
+    display: none;
+}
