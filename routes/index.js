@@ -10,5 +10,6 @@ router.get('/', indexControllers.getApartments);
 router.get('/apartment/:idApartment', indexControllers.getApartmentById);
 router.get('/apartment/:idApartment/edit', adminControllers.getEditAparmentForm);
 router.get('/apartment/:idApartment/estado', adminControllers.getEstadoAparmentForm);
+router.post('/apartment/search',indexControllers.postSearch);
 // Tenemos que exportar estas rutas para que sean usadas en app.js
 module.exports = router;

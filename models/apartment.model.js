@@ -76,7 +76,9 @@ const apartmentSchema = new Schema({
     location:{
         province:String,
         city:String,
-        gps:String
+        gps:String,
+        street:String,
+        googlemap:String
     },
     estado:{
         type:Number

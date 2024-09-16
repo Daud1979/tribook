@@ -43,6 +43,8 @@ const postNewApartment = async (req, res) => {
                 province:req.body.province,
                 city:req.body.city,
                 gps:req.body.gps,
+                street:req.body.street,
+                googlemap:req.body.googlemap
             },
             services: {
                 wifi: wifi,
@@ -94,6 +96,8 @@ const postEditApartment = async (req,res)=>{
             province:req.body.province,
             city:req.body.city,
             gps:req.body.gps,
+            street:req.body.street,
+            googlemap:req.body.googlemap
         },
         services: {
             wifi: wifi,
@@ -110,7 +114,6 @@ const postEditApartment = async (req,res)=>{
     
     await Apartment.findByIdAndUpdate(id, datos);
     const apartments = await Apartment.find();
-
     res.render('home', {
         apartments
     });

@@ -15,7 +15,7 @@ const authRoutes = require('./routes/auth.js');
 
 // creamos una instancia del servidor Express
 const app = express();
-
+app.use(express.json());
 // Tenemos que usar un nuevo middleware para indicar a Express que queremos procesar peticiones de tipo POST
 app.use(express.urlencoded({ extended: true }));
 //
@@ -51,7 +51,7 @@ app.use('/admin', (req, res, next) => {
         next();
     } else {
         // en caso contrario lo llevamos a la vista de login
-        res.redirect('/login');
+        res.redirect('/');
     }
 });
 // Añadimos las ritas de index.js en nuestra app

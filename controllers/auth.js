@@ -14,10 +14,10 @@ const postLoginForm =async (req, res) => {
 
     // Si el usuario y contraseña coinciden con el de nuestra "base de datos", entonces nos guardaremos la información de que el cliente esta autentificado.
     if (username === USERNAME && password === PASSWORD) {
+      
         req.session.isAuthenticated = true;
         res.locals.isAdmin = true;       
         const apartments = await Apartment.find();
-
         res.render('home', {
             apartments
         });

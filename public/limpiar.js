@@ -96,7 +96,7 @@ gps.addEventListener('click',()=>{
     city.value =textoSeleccionado ;
 })
 
-btnadmin = document.querySelector('#btnadmin');
+btnadmin = document.querySelector('#btnadmin1');
 btnadmin.addEventListener('click',()=>{
     alert('hola');
 
