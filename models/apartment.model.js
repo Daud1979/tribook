@@ -5,14 +5,14 @@ const apartmentSchema = new Schema({
 
     title: {
         type: String,
-        required: true
+        
     },  
-    description:{
+    isbn:{
         type:String,
-        require:true
+        
     },
-    normas:{
-        type:String        
+    price:{
+        type:Number        
     },
     nHab:{
         type:Number,
@@ -34,7 +34,7 @@ const apartmentSchema = new Schema({
         type:Number,
         require:true,
         min:1,
-        max:6
+        max:7
     },
     price: {
         type: Number,

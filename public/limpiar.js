@@ -102,3 +102,8 @@ btnadmin.addEventListener('click',()=>{
 
 })
 
+btnsearch = document.querySelector('#btnsearch');
+btnsearch.addEventListener('click',()=>{
+    alert('hola');
+});
+

@@ -1,6 +1,4 @@
 
-
-
 <%- include('./partials/head') %>
 <!-- Page content -->
 
@@ -11,7 +9,8 @@
     <p>Siéntete como en casa es nuestro lema. Ofrecemos las mejores camas de la industria. Duerme bien y descansa bien.</p>
   </div>
   <!-- action="/apartment/search" -->
-  <div class="w3-row-padding" >
+   
+  <form class="w3-row-padding" id="formBuscar" method="post" action="/apartment/search" >
     <div class="w3-col m2">
       <label>Provincia</label>
       <select id="province" name="province" class=" w3-input w3-border" onchange="cargarCiudades()">
@@ -24,7 +23,7 @@
     </div>
     <div class="w3-col m2">
       <label>Ciudad</label>
-      <select name="ciudad" id="ciudad" class=" w3-input w3-border" onchange="mostrarGPS()">
+      <select name="ciudad" id="ciudad" class=" w3-input w3-border" >
         <option selected>Seleccione una ciudad</option>
         <!-- Las opciones de ciudades se cargarán dinámicamente -->
       </select>    
@@ -36,6 +35,14 @@
     <div class="w3-col m1">
       <label>Personas</label>
       <input class="w3-input w3-border" name="people" id="people" type="number" placeholder="1">
+    </div>
+    <div class="w3-col m1">
+      <label>Desde</label>
+      <input class="w3-input w3-border" name="FInicio" id="FInicio" type="date" placeholder="1">
+    </div>
+    <div class="w3-col m1">
+      <label>Hasta</label>
+      <input class="w3-input w3-border" name="FFin" id="FFin" type="date" placeholder="1">
     </div>
     <div class="w3-col m2">
       <label> Precio €</label>
@@ -51,27 +58,31 @@
     </div>
     <div class="w3-col m1">
       <label><i class="fa fa-search"></i> </label>
-      <input type="button" id="btnsearch" class="w3-button w3-block w3-black" value="Filtrar">      
+      <input type="button" id="btnsearch" class="w3-button w3-block w3-black"  value="Filtrar">      
     </div>
-    <div class="w3-col m1">
+    <!-- <div class="w3-col m1">
       <label><i class="fa fa-search"></i> </label>
       <input type="button" id="btnlimpiar" class="w3-button w3-block w3-black" value="Limpiar">      
-    </div>
-  </div>
+    </div> -->
+  </form>
 
   <div class="col-12 col-md-12 col-xs-6 mt-2"  id="ContainerPhoto"> 
-   
-    
+ 
+     
       <% if (isAdmin) { %>
             <!--aqui el for-->
+         
       <% for (const ap of apartments) { %>
         <div class="w3-third w3-margin-bottom ">
-          <img src="<%= ap.mainPhoto %>" alt="Norway" style="width:100%; height: 350px;  ">
+       
+          <img src="<%= ap.mainPhoto %>" alt="Norway" style="width:100%; height: 350px; padding: 5px; ">
+       
           <div class="w3-container w3-white">
             <h3><%= ap.title %></h3>
-            <h5><%= ap.location.province %></h5>
+            <h5>Provincia:<%= ap.location.province %></h5>
             <h6>Ciudad: <%= ap.location.city %></h6>
-            <h6>Ubicacion: <%= ap.location.street %></h6>
+            <h6>Direccion: <%= ap.location.street %></h6>
+            <h6>Coordenadas Gps: <%= ap.location.gps %></h6>
             <h6 class="w3-opacity">Desde <%= ap.price %> € por noche</h6>          
             <p>m<sup>2</sup>  <%= ap.size %></p>
             <p class="w3-large"> 
@@ -127,16 +138,19 @@
         </div>
         <% } %>
         <!--hasta aqui-->
-        <% } else { %>
+      <% } else { %>
+        
           <!--aqui el for1-->
+         
           <% for (const ap of apartments) { %>
             <div class="w3-third w3-margin-bottom">
-          <img src="<%= ap.mainPhoto %>" alt="Norway" style="width:100%; height: 350px;  ">
+          <img src="<%= ap.mainPhoto %>" alt="Norway" style="width:100%; height: 350px; padding: 5px;  ">
           <div class="w3-container w3-white">
             <h3><%= ap.title %></h3>
-            <h5><%= ap.location.province %></h5>
+            <h5>Provincia: <%= ap.location.province %></h5>
             <h6>Ciudad: <%= ap.location.city %></h6>
-            <h6>Ubicacion: <%= ap.location.street %></h6>
+            <h6>Direccion: <%= ap.location.street %></h6>
+            <h6>Coordenadas Gps: <%= ap.location.gps %></h6>
             <h6 class="w3-opacity"><%= ap.price %> € por noche</h6>          
             <p>m<sup>2</sup>  <%= ap.size %></p>
             <p class="w3-large"> 
@@ -233,118 +247,9 @@
 <!-- End page content -->
 </div>
 
+
 <script>
-   btnsearch = document.querySelector('#btnlimpiar');
-   btnsearch.addEventListener('click',()=>{
-    location.reload();
-   
-    
-   });
-  btnsearch = document.querySelector('#btnsearch');
-  btnsearch.addEventListener('click',()=>{
-    ContainerPhoto = document.querySelector('#ContainerPhoto');
-    const data= {
-    province: document.querySelector('#province').value,
-    ciudad:document.querySelector('#ciudad').value,
-    hab:document.querySelector('#hab').value,
-    people:document.querySelector('#people').value,
-    precio:document.querySelector('#precio').value
-    };   
-    fetch('/apartment/search', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json'
-    },   
-    body: JSON.stringify(data)
-    })
-    .then(response => response.json())
-    .then(data => { 
-      ContainerPhoto.innerHTML='';
-      if (data.length==0)
-      {
-        
-        const h3 = document.createElement('h3');
-        h3.textContent = 'NO SE ENCONTRO APARTAMENTOS CON LOS FILTROS REQUERIDOS';
-        ContainerPhoto.appendChild(h3);
-        h3.classList.add('centrar');
-      }     
-      else
-      {
-        const container = ContainerPhoto;
-        container.innerHTML = ''; // Limpiar el contenedor antes de agregar nuevos datos
-
-            data.forEach(ap => {
-            // Crear un contenedor para cada apartamento
-            const apartmentDiv = document.createElement('div');
-            apartmentDiv.className = 'w3-third w3-margin-bottom';
-
-            // Crear la imagen
-            const img = document.createElement('img');
-            img.src = ap.mainPhoto;
-            img.alt = 'Apartment Image';
-            img.style.width = '100%';
-            img.style.height = '350px';
-
-            // Crear el contenido del apartamento
-            const contentDiv = document.createElement('div');
-            contentDiv.className = 'w3-container w3-white';
-
-            // Crear los elementos HTML del contenido
-            contentDiv.innerHTML = `
-                <h3>${ap.title}</h3>
-                <h5>${ap.location.province}</h5>
-                <h6>Ciudad: ${ap.location.city}</h6>
-                <h6>Coordenadas GPS: ${ap.location.gps}</h6>
-                <h6 class="w3-opacity"> ${ap.price} € por noche</h6>
-                <p>m<sup>2</sup> ${ap.size}</p>
-                <p class="w3-large">
-                    ${ap.services.wifi ? '<span class="material-symbols-outlined">wifi</span>' : ''}
-                    ${ap.services.tv ? '<span class="material-symbols-outlined">tv</span>' : ''}
-                    ${ap.services.airConditioner ? '<span class="material-symbols-outlined">mode_fan</span>' : ''}
-                    ${ap.services.kitchen ? '<span class="material-symbols-outlined">kitchen</span>' : ''}
-                    ${ap.services.disability ? '<span class="material-symbols-outlined">blind</span>' : ''}
-                    ${ap.services.heater ? '<span class="material-symbols-outlined">heat</span>' : ''}
-                    ${ap.services.parking ? '<span class="material-symbols-outlined">local_parking</span>' : ''}
-                    ${ap.services.pet ? '<span class="material-symbols-outlined">pets</span>' : ''}
-                </p>
-            `;
-
-            // Crear los botones
-             let buttons = '';
-            // if (data.isAdmin) {
-            //     buttons += `
-            //         <a class="w3-button w3-black w3-margin-bottom" href="/apartment/${ap._id}">Ver Detalle</a>
-            //         <a class="w3-button w3-black w3-margin-bottom" href="/apartment/${ap._id}/edit">Editar Apartamento</a>
-            //         ${ap.estado == 1 ? `<a class="w3-button w3-red w3-margin-bottom" href="/apartment/${ap._id}/estado">Deshabilitar</a>` : 
-            //         `<a class="w3-button w3-red w3-margin-bottom" href="/apartment/${ap._id}/estado">Habilitar</a>`}
-            //     `;
-            // } else {
-            //     buttons += `
-            //         <a class="w3-button w3-black w3-margin-bottom" href="/apartment/${ap._id}">Ver Detalle</a>
-            //         <a class="w3-button w3-black w3-margin-bottom" href="/apartment/${ap._id}">Reservar Apartamento</a>
-            //     `;
-            // }
-            contentDiv.innerHTML += buttons;
-
-            // Append image and content to apartmentDiv
-            apartmentDiv.appendChild(img);
-            apartmentDiv.appendChild(contentDiv);
-
-            // Append apartmentDiv to container
-            container.appendChild(apartmentDiv);
-        });
-
-        }
-      
-     
-    })
-    .catch((error) => {
-        console.error('Error:', error);
-  });
-});
-
-
-  const data = {
+    const data = {
     Madrid: [
         {nombre: 'Madrid'},
         {nombre: 'Alcalá de Henares'},
@@ -359,6 +264,116 @@
     ],
     // Agrega más provincias y ciudades según sea necesario
 };
+   btnsearch = document.querySelector('#btnlimpiar');
+  //  btnsearch.addEventListener('click',()=>{
+  //   location.reload();
+   
+    
+  //  });
+  let admin=1;
+  btnsearch = document.querySelector('#btnsearch');
+btnsearch.addEventListener('click', () => {
+  
+  
+  if (<%=isAdmin%>)
+  {
+    admin=1;
+  }
+  else{
+    admin=0;
+  }
+    let ContainerPhoto = document.querySelector('#ContainerPhoto');
+    const data = {
+        province: document.querySelector('#province').value,
+        ciudad: document.querySelector('#ciudad').value,
+        hab: document.querySelector('#hab').value,
+        people: document.querySelector('#people').value,
+        precio: document.querySelector('#precio').value
+    };
+
+    fetch('/apartment/search', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+        ContainerPhoto.innerHTML = '';
+        if (data.length === 0) {
+            const h3 = document.createElement('h3');
+            h3.textContent = 'NO SE ENCONTRO APARTAMENTOS CON LOS FILTROS REQUERIDOS';
+            ContainerPhoto.appendChild(h3);
+            h3.classList.add('centrar');
+        } else {
+            const container = ContainerPhoto;
+            container.innerHTML = ''; // Limpiar el contenedor antes de agregar nuevos datos
+
+            data.forEach(ap => {
+                const apartmentDiv = document.createElement('div');
+                apartmentDiv.className = 'w3-third w3-margin-bottom';
+
+                const img = document.createElement('img');
+                img.src = ap.mainPhoto;
+                img.alt = 'Apartment Image';
+                img.style.width = '100%';
+                img.style.height = '350px';
+                img.style.padding='5px';
+                const contentDiv = document.createElement('div');
+                contentDiv.className = 'w3-container w3-white';
+
+                contentDiv.innerHTML = `
+                    <h3>${ap.title}</h3>
+                    <h5>${ap.location.province}</h5>
+                    <h6>Ciudad: ${ap.location.city}</h6>
+                    <h6>Direccion: ${ap.location.street}</h6>
+                    <h6>Coordenadas Gps: ${ap.location.gps}</h6>
+                    <h6 class="w3-opacity">${ap.price} € por noche</h6>
+                    <p>m<sup>2</sup> ${ap.size}</p>
+                    <p class="w3-large">
+                        ${ap.services?.wifi ? '<span class="material-symbols-outlined">wifi</span>' : ''}
+                        ${ap.services?.tv ? '<span class="material-symbols-outlined">tv</span>' : ''}
+                        ${ap.services?.airConditioner ? '<span class="material-symbols-outlined">mode_fan</span>' : ''}
+                        ${ap.services?.kitchen ? '<span class="material-symbols-outlined">kitchen</span>' : ''}
+                        ${ap.services?.disability ? '<span class="material-symbols-outlined">blind</span>' : ''}
+                        ${ap.services?.heater ? '<span class="material-symbols-outlined">heat</span>' : ''}
+                        ${ap.services?.parking ? '<span class="material-symbols-outlined">local_parking</span>' : ''}
+                        ${ap.services?.pet ? '<span class="material-symbols-outlined">pets</span>' : ''}
+                    </p>
+                `;
+
+                let buttons = '';              
+                
+                if (admin==1) {
+                  
+                    buttons += `
+                        <a class="w3-button w3-black w3-margin-bottom" href="/apartment/${ap._id}">Ver Detalle</a>
+                        <a class="w3-button w3-black w3-margin-bottom" href="/apartment/${ap._id}/edit">Editar Apartamento</a>
+                        ${ap.estado == 1 ? `<a class="w3-button w3-red w3-margin-bottom" href="/apartment/${ap._id}/estado">Deshabilitar</a>` : 
+                        `<a class="w3-button w3-red w3-margin-bottom" href="/apartment/${ap._id}/estado">Habilitar</a>`}
+                    `;
+                } else {
+                 
+                    buttons += `
+                        <a class="w3-button w3-black w3-margin-bottom" href="/apartment/${ap._id}">Ver Detalle</a>
+                        <a class="w3-button w3-black w3-margin-bottom" href="/apartment/${ap._id}">Reservar Apartamento</a>
+                    `;
+                }
+                contentDiv.innerHTML += buttons;
+
+                apartmentDiv.appendChild(img);
+                apartmentDiv.appendChild(contentDiv);
+                container.appendChild(apartmentDiv);
+            });
+        }
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+        alert('Ocurrió un error al buscar apartamentos. Por favor, inténtalo de nuevo.');
+    });
+});
+
   function cargarCiudades() {
     const provinciaSelect = document.getElementById('province');
     const ciudadSelect = document.getElementById('ciudad');
@@ -379,12 +394,12 @@
         
     }
 }
-  const gps = document.getElementById('gps');
-gps.addEventListener('click',()=>{
-    const city = document.getElementById('city');
-    const textoSeleccionado =gps.options[gps.selectedIndex].textContent;
-    city.value =textoSeleccionado ;
-})
+//   const gps = document.getElementById('gps');
+// gps.addEventListener('click',()=>{
+//     const city = document.getElementById('ciudad');
+//     const textoSeleccionado =gps.options[gps.selectedIndex].textContent;
+//     city.value =textoSeleccionado ;
+// })
 
 
 

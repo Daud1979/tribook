@@ -22,6 +22,8 @@ const postLoginForm =async (req, res) => {
             apartments
         });
     } else {
+        req.session.isAuthenticated = false;
+        res.locals.isAdmin = false;  
         res.send('Usuario o contraseña incorrectos');
     }
 }

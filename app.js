@@ -5,16 +5,16 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const dotenv = require('dotenv');
 dotenv.config();
-
+const app = express();
 // importar las rutas públicas
 const indexRoutes = require('./routes/index.js');
-
+const apiRoutes = require('./routes/api.js');
 // importar las rutas de administrador
 const adminRoutes = require('./routes/admin.js');
 const authRoutes = require('./routes/auth.js');
-
+app.use('/api', apiRoutes);
 // creamos una instancia del servidor Express
-const app = express();
+
 app.use(express.json());
 // Tenemos que usar un nuevo middleware para indicar a Express que queremos procesar peticiones de tipo POST
 app.use(express.urlencoded({ extended: true }));
@@ -43,6 +43,7 @@ app.use((req, res, next) => {
     // tenemos que ejecutar next() para que la petición HTTP siga su curso
     next();
 })
+
 app.use('/admin', (req, res, next) => {
     // Miramos si el usuario esta autentificado
     if (req.session.isAuthenticated) {
@@ -51,6 +52,7 @@ app.use('/admin', (req, res, next) => {
         next();
     } else {
         // en caso contrario lo llevamos a la vista de login
+        res.locals.isAdmin = false;
         res.redirect('/');
     }
 });
