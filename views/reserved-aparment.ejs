@@ -1,10 +1,10 @@
 
 
   <%- include('./partials/head') %>
-  <div class="" style="width: 100%; background: red; display: flex;"> 
-    <div class="left" style="width: 40%;" ><!-- foto izq--> 
-      <div class="w3-container" id="apartment"> <!-- fotos -->
-        <h2 class="w3-text-green"><%= selectedApartment.title %></h2>
+  <div class="" style="width: 90%; display: flex; margin: 0 auto;"> 
+    <div class="left" style="width: 100%; " ><!-- foto izq--> 
+      <div class="w3-container" id="apartment" style="text-align: center;"> <!-- fotos -->
+        <h2 class="w3-text-black"><%= selectedApartment.title %></h2>
         <div class="w3-display-container mySlides">
           <img src="<%= selectedApartment.mainPhoto %>" style="width:100%;margin-bottom:-6px;">
           <div class="d-flex align-items-center justify-content-center bg-dark text-white p-1" style="height:50px;">
@@ -13,42 +13,72 @@
         </div>
         <div class="w3-display-container mySlides">
           <img src="<%= selectedApartment.photo1 %>" style="width:100%;margin-bottom:-6px">
-          <div class="d-flex align-items-center justify-content-center bg-dark text-white p-1" style="height:50px;">
+          <div class="d-flex align-items-center justify-content-center bg-dark text-white p-1" style="height:40px;">
             <p class="p-0 m-0"><%= selectedApartment.descriptionphoto1 %></p>
           </div>
         </div>
         <div class="w3-display-container mySlides">
           <img src="<%= selectedApartment.photo2 %>" style="width:100%;margin-bottom:-6px">
-          <div class="d-flex align-items-center justify-content-center bg-dark text-white p-1" style="height:50px;">
+          <div class="d-flex align-items-center justify-content-center bg-dark text-white p-1" style="height:40px;">
             <p class="p-0 m-0"><%= selectedApartment.descriptionphoto2 %></p>
           </div>
         </div>
         <div class="w3-display-container mySlides">
           <img src="<%= selectedApartment.photo3 %>" style="width:100%;margin-bottom:-6px">
-          <div class="d-flex align-items-center justify-content-center bg-dark text-white p-1" style="height:50px;">
+          <div class="d-flex align-items-center justify-content-center bg-dark text-white p-1" style="height:40px;">
             <p class="p-0 m-0"><%= selectedApartment.descriptionphoto3 %></p>
           </div>
         </div>
+      </div><!--fin foto-->
+      <div class="w3-row-padding w3-section">
+        <div class="w3-col s3">
+          <img class="demo w3-opacity w3-hover-opacity-off" src="<%= selectedApartment.mainPhoto %>" style="height: 130px; width:100%;cursor:pointer" onclick="currentDiv(1)" title="Living room">
+        </div>
+        <div class="w3-col s3">
+          <img class="demo w3-opacity w3-hover-opacity-off" src="<%= selectedApartment.photo1 %>" style="height: 130px; width:100%;cursor:pointer" onclick="currentDiv(2)" title="Dining room">
+        </div>
+        <div class="w3-col s3">
+          <img class="demo w3-opacity w3-hover-opacity-off" src="<%= selectedApartment.photo2 %>" style="height: 130px; width:100%;cursor:pointer" onclick="currentDiv(3)" title="Bedroom">
+        </div>
+        <div class="w3-col s3">
+          <img class="demo w3-opacity w3-hover-opacity-off" src="<%= selectedApartment.photo3 %>" style="height: 130px; width:100%;cursor:pointer" onclick="currentDiv(4)" title="Second Living Room">
+        </div>
+    </div>  
+    </div><!--aqui acaba foto-->
+    
+    <div class="right mt-5" style="width: 100%;  " >
+        <div class="formReserva">
+          <h5 class="w3-text-black">DATOS PARA LA RESERVA</h5>
+          <form>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Correo Electronico</label>
+              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="prueba@mail.com">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Nombre del Cliente</label>
+              <input type="text" class="form-control" id="exampleInputPassword1" placeholder="">
+            </div>  
+            <div style="display: flex; gap: 1rem;">
+            <div class="form-group col-4">
+              <label for="exampleInputPassword1">Desde</label>
+              <input type="date" class="form-control" id="exampleInputPassword1" placeholder="">
+            </div> 
+            <div class="form-group col-4">
+              <label for="exampleInputPassword1">Hasta</label>
+              <input type="date" class="form-control" id="exampleInputPassword1" placeholder="">
+            </div> 
+          </div>   
+            <div class="mt-2" style="text-align: end;">
+              <button type="button" id="sendForm" class="btn btn-primary">Registrar</button>
+              <button type="cancel" class="btn btn-secondary">Cancelar</button>
+            </div>   
+            
+          </form>
+          <h5 class="aviso">aqui el mensaje</h5>
+        </div>
+        
       </div>
-        <div class="w3-row-padding w3-section">
-          <div class="w3-col s3">
-            <img class="demo w3-opacity w3-hover-opacity-off" src="<%= selectedApartment.mainPhoto %>" style="height: 130px; width:100%;cursor:pointer" onclick="currentDiv(1)" title="Living room">
-          </div>
-          <div class="w3-col s3">
-            <img class="demo w3-opacity w3-hover-opacity-off" src="<%= selectedApartment.photo1 %>" style="height: 130px; width:100%;cursor:pointer" onclick="currentDiv(2)" title="Dining room">
-          </div>
-          <div class="w3-col s3">
-            <img class="demo w3-opacity w3-hover-opacity-off" src="<%= selectedApartment.photo2 %>" style="height: 130px; width:100%;cursor:pointer" onclick="currentDiv(3)" title="Bedroom">
-          </div>
-          <div class="w3-col s3">
-            <img class="demo w3-opacity w3-hover-opacity-off" src="<%= selectedApartment.photo3 %>" style="height: 130px; width:100%;cursor:pointer" onclick="currentDiv(4)" title="Second Living Room">
-          </div>
-        </div>    
-      </div><!--aqui acaba foto-->
-    </div><!--aqui acaba izq-->
-    <div >
-      sdfsd
-    </div>
+    
   </div>
 
  <script>
@@ -90,6 +120,12 @@ function showDivs(n) {
   x[slideIndex-1].style.display = "block";
   dots[slideIndex-1].className += " w3-opacity-off";
 }
+
+btnsendForm = document.querySelector('#sendForm');
+btnsendForm.addEventListener('click', ()=>{
+  alert("hola");
+
+})
 </script>
 
 
