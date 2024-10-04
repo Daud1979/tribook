@@ -127,8 +127,8 @@
                   </span>
               <% } %>
             </p>
-            <a class="w3-button  w3-black w3-margin-bottom" href="/apartment/<%= ap._id %>">Ver Detalle</a>
-            <a class="w3-button  w3-black w3-margin-bottom" href="/apartment/<%= ap._id %>/edit">Editar Apartamento</a>
+            <a class="w3-button  w3-black w3-margin-bottom" href="/apartment/<%= ap._id %>">Mostrar Detalle Apartamento</a>
+           
             <% if (ap.estado==1) { %>
               <a class="w3-button  w3-red w3-margin-bottom" href="/apartment/<%= ap._id %>/estado">Deshabilitar </a>
             <% } else { %>
@@ -196,8 +196,8 @@
               <% } %>
             </p>
            
-            <a class="w3-button  w3-black w3-margin-bottom" href="/apartment/<%= ap._id %>">Ver Detalle</a>
-            <a class="w3-button w3-black w3-margin-bottom" href="<%= ap._id %>">Resevar Apartamento</a>
+            <a class="w3-button  w3-black w3-margin-bottom" href="/apartment/<%= ap._id %>">Mostrar Detalle Apartamento</a>
+          
      
           </div>
             </div>
@@ -246,8 +246,11 @@
 
 <!-- End page content -->
 </div>
+<!--modal reserva ---->
 
 
+
+<!-- -->
 <script>
     const data = {
     Madrid: [

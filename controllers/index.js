@@ -41,9 +41,18 @@ const postSearch =async (req,res)=>{
     // });
     res.json(apartments);
 }
+const getApartmentReserv =async (req,res)=>{
+    const { idApartment } = req.params;
 
+    const selectedApartment = await Apartment.findById(idApartment);
+
+    res.render('reserved-aparment', {
+        selectedApartment
+    });
+}
 module.exports = {
     getApartments,
     getApartmentById,
-    postSearch
+    postSearch,
+    getApartmentReserv
 }

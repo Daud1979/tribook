@@ -33,9 +33,8 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
       <% } else { %>
         <a class="w3-button  w3-red w3-margin-bottom" href="/apartment/<%= selectedApartment._id %>/estado">Habilitar </a>
       <% } %>
-    <% } else { %>
-        
-        <a class="w3-button  w3-black w3-margin-bottom" href="/apartment/<%= selectedApartment._id%>">Reservar Apartamento</a>
+    <% } else { %>     
+        <a class="w3-button  w3-black w3-margin-bottom" href="/apartment/<%= selectedApartment._id%>/reserved">Realizar Reservar </a> 
     <% } %>
 
   </div>
@@ -239,5 +238,7 @@ function showDivs(n) {
   dots[slideIndex-1].className += " w3-opacity-off";
 }
 </script>
+
+
 </body>
 </html>

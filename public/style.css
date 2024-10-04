@@ -21,3 +21,10 @@ body, html {
 .centrar{
     text-align: center;
 }
+.reserva{
+background: red;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    top: 0;
+}
