@@ -34,3 +34,19 @@ background: red;
     height: 515px;
 
 }
+.avisored{
+    margin-top: 1rem;
+    background: red;
+    color: white;
+    text-align: center;
+    padding: 5px;
+    border-radius: 5px;
+}
+.avisogreen{
+    margin-top: 1rem;
+    background: green;
+    color: white;
+    text-align: center;
+    padding: 5px;
+    border-radius: 5px;
+}

@@ -52,20 +52,20 @@
           <form>
             <div class="form-group">
               <label for="exampleInputEmail1">Correo Electronico</label>
-              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="prueba@mail.com">
+              <input type="email" name="emails" id="emails" class="form-control"  aria-describedby="emailHelp" placeholder="prueba@mail.com">
             </div>
             <div class="form-group">
               <label for="exampleInputPassword1">Nombre del Cliente</label>
-              <input type="text" class="form-control" id="exampleInputPassword1" placeholder="">
+              <input type="text" name="cliente" id="cliente" class="form-control" id="exampleInputPassword1" placeholder="">
             </div>  
             <div style="display: flex; gap: 1rem;">
             <div class="form-group col-4">
               <label for="exampleInputPassword1">Desde</label>
-              <input type="date" class="form-control" id="exampleInputPassword1" placeholder="">
+              <input type='date' name="datestart" id="datestart" class="form-control" placeholder="">
             </div> 
             <div class="form-group col-4">
               <label for="exampleInputPassword1">Hasta</label>
-              <input type="date" class="form-control" id="exampleInputPassword1" placeholder="">
+              <input type='date' class="form-control" name="dateend" id="dateend" placeholder="">
             </div> 
           </div>   
             <div class="mt-2" style="text-align: end;">
@@ -74,7 +74,7 @@
             </div>   
             
           </form>
-          <h5 class="aviso">aqui el mensaje</h5>
+          <h5 id="mensaje"></h5>
         </div>
         
       </div>
@@ -82,6 +82,11 @@
   </div>
 
  <script>
+  window.addEventListener('DOMContentLoaded', (evento) => {
+    const today = new Date().toISOString().split("T")[0];
+    document.getElementById("datestart").setAttribute("min", today);
+    document.getElementById("dateend").setAttribute("min", today);
+});
 // Script to open and close sidebar when on tablets and phones
 function w3_open() {
   document.getElementById("mySidebar").style.display = "block";
@@ -123,8 +128,40 @@ function showDivs(n) {
 
 btnsendForm = document.querySelector('#sendForm');
 btnsendForm.addEventListener('click', ()=>{
-  alert("hola");
+  let mensaje=document.querySelector('#mensaje');
+  mensaje.classList.remove('avisored');
+  mensaje.classList.remove('avisogreen');
+  mensaje.innerHTML='';
+  let email = document.querySelector('#emails').value;
+  let cliente = document.querySelector('#cliente').value;
+  let datestart= document.querySelector('#datestart').value;
+  let dateend= document.querySelector('#dateend').value;
+  let id=("<%- selectedApartment._id %>");
 
+  let data ={
+    email,cliente,datestart,dateend,id
+  }
+  
+  fetch('/apartment/reserve/apartment', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+     if (data.type==0)
+     {
+      mensaje.classList.add('avisored');
+      mensaje.innerHTML=data.message;      
+     }
+     else
+     {
+      mensaje.classList.add('avisogreen');
+      mensaje.innerHTML=data.message;      
+     }
+    })
 })
 </script>
 

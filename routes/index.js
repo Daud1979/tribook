@@ -8,9 +8,10 @@ const adminControllers = require('../controllers/admin.js');
 // Router funciona igual que el "app" para crear los endpoints. Nos permite definir un conjunto arbitrario de rutas
 router.get('/', indexControllers.getApartments);
 router.get('/apartment/:idApartment', indexControllers.getApartmentById);
-router.get('/apartment/:idApartment/reserved', indexControllers.getApartmentReserv);
+router.get('/apartment/:idApartment/reserve', indexControllers.getApartmentReserv);
 router.get('/apartment/:idApartment/edit', adminControllers.getEditAparmentForm);
 router.get('/apartment/:idApartment/estado', adminControllers.getEstadoAparmentForm);
 router.post('/apartment/search',indexControllers.postSearch);
+router.post('/apartment/reserve/apartment',indexControllers.postReserveApartmen);
 // Tenemos que exportar estas rutas para que sean usadas en app.js
 module.exports = router;

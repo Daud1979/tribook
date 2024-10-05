@@ -5,6 +5,10 @@ const reservationSchema = Schema({
         type: String,
         required: true
     },
+    cliente:{
+        type:String,
+        required:true
+    },
     startDate: {
         type: Date,
         required: true
@@ -12,7 +16,7 @@ const reservationSchema = Schema({
     endDate: {
         type: Date,
         required: true
-        // TODO: podéis preguntar a CHAT como realizar una validación para que startDate sea siempre antes que endDate
+       
     },
     status: {
         type: String,
