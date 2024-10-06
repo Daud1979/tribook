@@ -23,7 +23,8 @@ const getApartmentById = async (req, res) => {
 };
 
 const postSearch =async (req,res)=>{
-    const { province, ciudad, hab, people, precio } = req.body;
+    const { province, ciudad, hab, people, precio,FInicio,FFin } = req.body;
+   
     let filtro = {};    
     // Agregar filtros opcionales según si los valores están presentes
     if (province !='Seleccione una provincia') filtro['location.province'] = province;
@@ -33,21 +34,54 @@ const postSearch =async (req,res)=>{
     if (precio!='Seleccione un precio') {
         const precionuevo = precio.split('_');
         filtro.price = { $gte: precionuevo[0], $lte: precionuevo[1] };
-    }        
-     const apartments = await Apartment.find(filtro);
-    //  res.render('home', {
-    //     body:'req.body',
-    //     apartments
-    // });
+    }   
+    //aqui 
+   
+    if (FInicio!='' && FFin!='' && FInicio<=FFin)
+    {
+        endDate = new Date(FFin);
+        startDate = new Date(FInicio);
+        const reservedApartments = await Reservas.find({
+            startDate: { $lte: endDate }, // Las reservas que comienzan antes o en la fecha final
+            endDate: { $gte: startDate }   // Las reservas que terminan después o en la fecha inicial
+        }).select('apartment'); // Solo obtener el campo 'apartment'
+        
+        // Crear un array de IDs de apartamentos reservados
+        const reservedApartmentIds = reservedApartments.map(reservation => reservation.apartment);       
+        filtro._id={
+            $nin: reservedApartmentIds 
+        }
+       
+    }       
+    const apartments = await Apartment.find(filtro); 
     res.json(apartments);
 }
 const getApartmentReserv =async (req,res)=>{
     const { idApartment } = req.params;
 
     const selectedApartment = await Apartment.findById(idApartment);
-
+    const selectdateApartment = await Reservas.find({
+        apartment:idApartment,
+        status: { $in: ['Pending', 'Accepted'] }
+    })
+    const formattedReservations = selectdateApartment.map(reserva => {
+        const startDate = new Date(reserva.startDate);
+        const endDate = new Date(reserva.endDate);
+        
+        const formattedStartDate = `${startDate.getFullYear()}-${String(startDate.getMonth() + 1).padStart(2, '0')}-${String(startDate.getDate()).padStart(2, '0')}`;
+        const formattedEndDate = `${endDate.getFullYear()}-${String(endDate.getMonth() + 1).padStart(2, '0')}-${String(endDate.getDate()).padStart(2, '0')}`;
+        
+        return {
+            ...reserva._doc, 
+            startDate: formattedStartDate,
+            endDate: formattedEndDate
+            
+        };
+    });
     res.render('reserved-aparment', {
-        selectedApartment
+        selectedApartment,
+        formattedReservations
+       
     });
 }
 

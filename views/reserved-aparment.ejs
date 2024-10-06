@@ -69,12 +69,18 @@
             </div> 
           </div>   
             <div class="mt-2" style="text-align: end;">
-              <button type="button" id="sendForm" class="btn btn-primary">Registrar</button>
-              <button type="cancel" class="btn btn-secondary">Cancelar</button>
+              <button type="button" id="sendForm" class="w3-button  w3-blue w3-margin-bottom">Registrar</button>
+              <a href="/" class="w3-button  w3-black w3-margin-bottom">Cancelar</a>
             </div>   
             
           </form>
           <h5 id="mensaje"></h5>
+          <h5>LISTA DE FECHAS EN RESERVAS </h5>
+          <%  let j = 1; %>
+          <% for (const date of formattedReservations) { %>
+            <P class="ps-4 ts-2"><%= j %>: desde <%= date.startDate %> hasta <%= date.endDate %></P>
+          <% j++} %>
+            
         </div>
         
       </div>
@@ -85,8 +91,13 @@
   window.addEventListener('DOMContentLoaded', (evento) => {
     const today = new Date().toISOString().split("T")[0];
     document.getElementById("datestart").setAttribute("min", today);
-    document.getElementById("dateend").setAttribute("min", today);
-});
+    document.getElementById("dateend").setAttribute("min", today);    
+   
+  });
+///
+
+
+ 
 // Script to open and close sidebar when on tablets and phones
 function w3_open() {
   document.getElementById("mySidebar").style.display = "block";

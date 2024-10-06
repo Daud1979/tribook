@@ -58,7 +58,7 @@
     </div>
     <div class="w3-col m1">
       <label><i class="fa fa-search"></i> </label>
-      <input type="button" id="btnsearch" class="w3-button w3-block w3-black"  value="Filtrar">      
+      <input type="button" id="btnsearch" class="w3-button w3-block w3-blue"  value="Filtrar">      
     </div>
     <!-- <div class="w3-col m1">
       <label><i class="fa fa-search"></i> </label>
@@ -252,6 +252,12 @@
 
 <!-- -->
 <script>
+    window.addEventListener('DOMContentLoaded', (evento) => {
+    const today = new Date().toISOString().split("T")[0];
+    document.getElementById("FInicio").setAttribute("min", today);
+    document.getElementById("FFin").setAttribute("min", today);    
+   
+  });
     const data = {
     Madrid: [
         {nombre: 'Madrid'},
@@ -291,7 +297,9 @@ btnsearch.addEventListener('click', () => {
         ciudad: document.querySelector('#ciudad').value,
         hab: document.querySelector('#hab').value,
         people: document.querySelector('#people').value,
-        precio: document.querySelector('#precio').value
+        precio: document.querySelector('#precio').value,
+        FInicio: document.querySelector('#FInicio').value,
+        FFin: document.querySelector('#FFin').value
     };
 
     fetch('/apartment/search', {
@@ -351,16 +359,16 @@ btnsearch.addEventListener('click', () => {
                 if (admin==1) {
                   
                     buttons += `
-                        <a class="w3-button w3-black w3-margin-bottom" href="/apartment/${ap._id}">Ver Detalle</a>
-                        <a class="w3-button w3-black w3-margin-bottom" href="/apartment/${ap._id}/edit">Editar Apartamento</a>
+                        <a class="w3-button w3-black w3-margin-bottom" href="/apartment/${ap._id}">Mostrar Apartamento</a>
+                        
                         ${ap.estado == 1 ? `<a class="w3-button w3-red w3-margin-bottom" href="/apartment/${ap._id}/estado">Deshabilitar</a>` : 
                         `<a class="w3-button w3-red w3-margin-bottom" href="/apartment/${ap._id}/estado">Habilitar</a>`}
                     `;
                 } else {
                  
                     buttons += `
-                        <a class="w3-button w3-black w3-margin-bottom" href="/apartment/${ap._id}">Ver Detalle</a>
-                        <a class="w3-button w3-black w3-margin-bottom" href="/apartment/${ap._id}">Reservar Apartamento</a>
+                        <a class="w3-button w3-black w3-margin-bottom" href="/apartment/${ap._id}">Mostrar Apartamento</a>
+                      
                     `;
                 }
                 contentDiv.innerHTML += buttons;
